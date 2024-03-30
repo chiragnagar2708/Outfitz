@@ -1,0 +1,151 @@
+.shopcategory-banner{
+    display: block;
+    margin: 50px auto;
+}
+.shopcategory-indexSort{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 50px;
+}
+.shopcategory-indexSort1{
+    display: flex;
+    gap: 5px;
+}
+.shopcategory-indexSort1 span{
+    font-weight: 600;
+}
+.shopcategory-products{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 20px;
+    column-gap: 10px;
+    margin-top: 20px;
+}
+.shopcategory-sort{
+    padding: 5px 10px;
+    border-radius: 40px;
+    border: 1px solid #807e7e;
+}
+.shopcategory-loadmore{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    width: 150px;
+    height: 40px;
+    border-radius: 75px;
+    background-color: #e2e0e0;
+    font-size: 1.2rem;
+    font-weight: bold;  
+}
+.popu{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0px;
+}
+
+.popular1{
+    display: flex;
+    flex-direction: row;
+    font-size: 0.8rem;
+    margin: 5px 10px;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    /* font-size: 1rem; */
+}
+.popular1 hr{
+    width:80%;
+    background-color: #efeded;
+    height: 0.5px;
+    margin: 0px 10px;
+}
+.popular1-search{
+    font-size: 0.8rem;
+    margin: 0px 10px;
+    color: #676464;
+}
+
+@media only screen and (max-width: 870px){
+    .shopcategory-banner{
+        width: 90%;
+    }
+    .popular1{
+        font-size: 0.7rem;
+    }
+    .popular1 hr{
+        width:70%;
+    }
+    .popular1-search{
+        font-size: 0.7rem;
+    }
+}
+@media only screen and (max-width: 550px){
+    .shopcategory-banner{
+        margin: 40px auto;
+    }
+    .shopcategory-products{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        row-gap: 20px;
+    }
+    .shopcategory-indexSort{
+        font-size: 0.8rem;
+    }
+    .shopcategory-sort{
+        font-size: 0.8rem;
+        padding: 3px 5px;
+    }
+    .shopcategory-loadmore{
+        margin: 20px auto;
+        width: 130px;
+        height: 40px;
+        font-size: 1rem;
+    }  
+}
+@media only screen and (max-width: 450px){
+    .shopcategory-banner{
+        margin-bottom: 20px;
+    }
+    .shopcategory-indexSort{
+        padding: 0px 30px;
+    }
+    .shopcategory-indexSort1{
+        flex-direction: column;
+        gap: 0px;
+    }
+    .popular1{
+        font-size: 0.5rem;
+    }
+    .popular1 hr{
+        width:60%;
+    }
+    .popular1-search{
+        font-size: 0.5rem;
+    }  
+}
+@media only screen and (max-width: 270px){
+    .shopcategory-products{
+        grid-template-columns: 1fr;
+    }
+    .shopcategory-loadmore{
+        margin: 10px auto;
+        width: 100px;
+        height: 30px;
+        font-size: 0.8rem;
+    }  
+    .shopcategory-indexSort{
+        padding: 0px 10px;
+        font-size: 0.7rem;
+    }
+    .popular1{
+        font-size: 0.4rem;
+    }
+    .popular1 hr{
+        width:60%;
+    }
+    .popular1-search{
+        font-size: 0.4rem;
+    }
+}

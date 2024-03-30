@@ -1,0 +1,9 @@
+.admin{
+    display: flex;
+    background: white;
+}
+@media only screen and (max-width: 700px){
+    .admin{
+        flex-direction: column;
+    }
+}
