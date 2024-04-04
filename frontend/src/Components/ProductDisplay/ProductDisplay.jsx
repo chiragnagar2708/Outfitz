@@ -48,8 +48,9 @@ const ProductDisplay = (props) => {
             </div>
         </div>
         <button onClick={() => {addToCart(product.id)}}>ADD TO CART</button>
-        <p className= 'productdisplay-right-category'><span>Category :</span>Shirt, jeans, Crop Top and many more</p>
-        <p className= 'productdisplay-right-category'><span>Tags :</span>Modern, Latest</p>
+        <p className= 'productdisplay-right-category'><span>Bank Offer </span>5% Cashback on Flipkart Axis Bank Card</p>
+        <p className= 'productdisplay-right-category'><span>Bank Offer </span>Get ₹25* instant discount for the 1st Flipkart Order using Flipkart UPI</p>
+        <p className= 'productdisplay-right-category'><span>Bank Offer </span>₹2000 Off On SBI, Axis, ICICI Banks Credit and Debit Card Transaction</p>
       </div>
     </div>
   )
