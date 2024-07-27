@@ -3,7 +3,6 @@ import './NewCollections.css'
 import Item from '../Item/Item'
 
 const NewCollections = () => {
-
   const [new_collection, setNew_collection] = useState([]);
 
   useEffect(() => {
@@ -11,6 +10,7 @@ const NewCollections = () => {
     .then((response) => response.json())
     .then((data) => setNew_collection(data));
   }, [])
+  
   return (
     <div className='new-collections'>
       <h1>NEW COLLECTIONS</h1>

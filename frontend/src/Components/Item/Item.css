@@ -7,6 +7,10 @@
     display: flex;
     justify-content: center;
 }
+/* .image img {
+    height: 200px;
+    width: 167px; 
+} */
 .item p{
     margin: 6px 0px;
     font-size: 1rem;
@@ -34,6 +38,7 @@
 @media only screen and (max-width: 730px){
     .image img{
         height: 150px;
+        /* width: 125px; */
     }
     .item p{
         font-size: 0.9rem;

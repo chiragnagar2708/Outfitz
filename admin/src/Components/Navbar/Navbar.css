@@ -8,22 +8,26 @@
     background: white;
 }
 .nav-logo{
-    width: 150px;
+    /* width: 150px; */
 }
-.nav-profile{
+/* .nav-profile{
     width: 75px;
+} */
+.nav-profile1{
+    width: 50px;
+    border-radius: 50px;
 }
 
 @media only screen and (max-width: 700px){
     .navbar{
         padding: 8px 10px;
     }
-    .nav-logo{
+    /* .nav-logo{
         width: 150px;
-    }
-    .nav-profile{
+    } */
+    /* .nav-profile{
         width: 60px;
-    }
+    } */
 }
 @media only screen and (max-width: 400px){
     .navbar{
@@ -32,7 +36,10 @@
     .nav-logo{
         width: 100px;
     }
-    .nav-profile{
+    /* .nav-profile{
         width: 50px;
+    } */
+    .nav-profile1{
+        width: 35px;
     }
 }

@@ -86,7 +86,7 @@
     }
     .nav-dropdown{
         display: block;
-        transition: 0.01s;
+        transition: 0.05s;
         rotate: -90deg;
     }
     .nav-menu{
