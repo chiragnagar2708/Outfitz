@@ -83,7 +83,6 @@ const AddProduct = () => {
         </label>
         <input onChange={imageHandler} type="file" name='image' id='file-input' hidden />
       </div>
-        <p className='size'>Image must be of 167*200 px</p>
       <button onClick={() => {Add_Product()}} className='addproduct-btn'>ADD</button>
     </div>
   )

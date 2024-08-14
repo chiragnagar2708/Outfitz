@@ -3,11 +3,21 @@ import './ProductDisplay.css'
 import star_icon from '../Assets/star_icon.png'
 import star_dull_icon from '../Assets/star_dull_icon.png'
 import { ShopContext } from '../../Context/ShopContext'
+import {useNavigate} from 'react-router-dom';
 
 const ProductDisplay = (props) => {
     const {product} = props;
     const {addToCart} = useContext(ShopContext);
+    const navigate = useNavigate();
 
+    const handleAddToCart = () => {
+      if(!localStorage.getItem('auth-token')){
+        alert("Please login to add items to your cart");
+        navigate('/login');
+        return;
+      }
+      addToCart(product.id);
+    }
 
   return (
     <div className='productdisplay'>
@@ -47,7 +57,8 @@ const ProductDisplay = (props) => {
                 <div>XXL</div>
             </div>
         </div>
-        <button onClick={() => {addToCart(product.id)}}>ADD TO CART</button>
+        {/* <button onClick={() => {addToCart(product.id)}}>ADD TO CART</button> */}
+        <button onClick={handleAddToCart}>ADD TO CART</button>
         <p className= 'productdisplay-right-category'><span>Bank Offer </span>5% Cashback on Flipkart Axis Bank Card</p>
         <p className= 'productdisplay-right-category'><span>Bank Offer </span>Get ₹25* instant discount for the 1st Flipkart Order using Flipkart UPI</p>
         <p className= 'productdisplay-right-category'><span>Bank Offer </span>₹2000 Off On SBI, Axis, ICICI Banks Credit and Debit Card Transaction</p>

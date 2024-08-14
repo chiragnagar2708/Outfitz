@@ -1,4 +1,3 @@
-const port = 4000;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -6,11 +5,19 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
+const validator = require("validator");
+const bcrypt = require("bcrypt");
+
+require('dotenv').config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);  
+
+const port = process.env.PORT || 4000
+
 
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect("mongodb+srv://admin:9j2NLewQxGCf2Xz7@cluster0.iaismll.mongodb.net/e-commerce")
+mongoose.connect(process.env.MONGO_URL);
 
 //API Creation
 
@@ -34,7 +41,7 @@ app.use('/images', express.static('upload/images'))
 app.post("/upload", upload.single('product'),(req, res) => {
     res.json({
         success:1,
-        image_url:`http://localhost:${port}/images/${req.file.filename}`
+        image_url: `http://localhost:${port}/images/${req.file.filename}`
     })
 })
 
@@ -127,13 +134,14 @@ app.get('/allproducts', async (req, res) => {
 const Users = mongoose.model('Users', {
     name: {
         type: String,
+        required: true,
     },
     email: {
         type: String,
-        unique: true,
     },
     password: {
         type: String,
+        required: true,
     },
     cartData: {
         type: Object,
@@ -147,6 +155,22 @@ const Users = mongoose.model('Users', {
 // Creating Endpoint for registering the user
 
 app.post('/signup', async(req, res) => {
+
+    const { username, email, password } = req.body;
+
+    if(!username || !email || !password)
+    {
+        return res.status(400).json({success: false, errors: "Please fill all details"});
+    }
+
+    if(!validator.isEmail(email)){
+        return res.status(400).json({success: false, errors: "Please Provide a valid email"});
+    }
+
+    if (password.length < 8) {
+        return res.status(400).json({ success: false, errors: "Password must be at least 8 characters long" });
+    }
+
     let check = await Users.findOne({email: req.body.email});
 
     if(check){
@@ -158,10 +182,12 @@ app.post('/signup', async(req, res) => {
         cart[i] = 0;
     }
 
+    hashpassword = await bcrypt.hash(password, 10);
+
     const user = new Users({
-        name: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
+        name: username,
+        email: email,
+        password: hashpassword,
         cartData: cart,
     })
 
@@ -180,10 +206,22 @@ app.post('/signup', async(req, res) => {
 //creating endpoint for user login
 
 app.post('/login', async (req, res) => {
-    let user = await Users.findOne({email: req.body.email});
+    const { email, password } = req.body;
+
+    if(!email || !password)
+    {
+        return res.status(400).json({success: false, errors: "Please fill all details"});
+    }
+
+    if(!validator.isEmail(email)){
+        return res.status(400).json({success: false, errors: "Please Provide a valid email"});
+    }
+
+    let user = await Users.findOne({email: email});
 
     if(user){
-        const passCompare =  req.body.password === user.password;
+        // const passCompare =  password === user.password;
+        const passCompare = await bcrypt.compare(password, user.password);
         if(passCompare){
             const data = {
                 user: {
@@ -195,11 +233,11 @@ app.post('/login', async (req, res) => {
             res.json({success: true, token});
         }
         else{
-            res.json({success: false, errors: "Wrong Password"});
+            res.json({success: false, errors: "Incorrect Password"});
         }
     }
     else{
-        res.json({success: false, errors: "Wrong email id"});
+        res.json({success: false, errors: "Incorrect email id"});
     }
 })
 
@@ -279,6 +317,48 @@ app.post('/getcart', fetchUser, async (req, res) => {
     let userData = await Users.findOne({_id: req.user.id});
     res.json(userData.cartData);
 })
+
+//Creating endpoint for Checkout
+app.post("/create-checkout-session", async(req, res) => {
+    const {products} = req.body;
+
+    const lineItems = products.map((product) =>({
+        price_data:{
+            currency: "USD",
+            product_data:{
+                name: product.name,
+            },
+            unit_amount: product.new_price*100,
+        },
+        quantity: product.quantity,
+    }))
+
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: lineItems,
+        mode: "payment",
+        success_url: `${process.env.FRONTEND_URL}/success`,
+        cancel_url: `${process.env.FRONTEND_URL}/cancel`,
+    });
+
+    res.json({id: session.id});
+});
+
+
+app.post('/clear-cart', fetchUser, async (req, res) => {
+    const userId = req.user.id;
+    
+    try {
+        let cart = {};
+        for(let i=0; i<300; i++){
+            cart[i] = 0;
+        }
+        await Users.findByIdAndUpdate(userId, { cartData: cart, new: true });
+        res.status(200).json({ success: true });
+    } catch (error) {
+        res.status(500).json({ success: false, error: "Server error" });
+    }
+});
 
 app.listen(port, (error) => {
     if(!error){

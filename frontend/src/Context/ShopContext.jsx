@@ -35,7 +35,6 @@ const ShopContextProvider = (props) => {
 
     const addToCart = (itemId) => {
         setCartItems((prev) => ({...prev, [itemId]: prev[itemId]+1}));
-
         if(localStorage.getItem('auth-token')){
             fetch('http://localhost:4000/addtocart', {
                 method: 'POST',
@@ -93,7 +92,11 @@ const ShopContextProvider = (props) => {
         return totalItem;
     }
 
-    const contextValue = {getTotalCartItems, getTotalCartAmount, all_product, cartItems, addToCart, removeFromCart};
+    const clearCart = () => {
+        setCartItems(getDefaultCart());
+    }
+
+    const contextValue = {getTotalCartItems, getTotalCartAmount, all_product, cartItems, addToCart, removeFromCart, clearCart};
 
     return(
         <ShopContext.Provider value={contextValue}>

@@ -1,0 +1,83 @@
+.cancel {
+    height: 77.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0px 20px;
+}
+
+.imgP1 {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.imgP1 p {
+    color: red;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.homeP1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.homeP1 p {
+    color: rgb(109, 107, 107);
+    text-align: center;
+    font-weight: 500;
+}
+
+.homeP1 button {
+    width: 100px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.homeP1 button:hover {
+    background-color: darkred;
+}
+
+@media only screen and (max-width: 768px) {
+    .imgP1 p {
+        font-size: 18px;
+    }
+
+    .homeP1 button {
+        width: 90px;
+        padding: 8px 12px;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .imgP1 img {
+        height: 100px;
+        width: 105px;
+    }
+
+    .imgP1 p {
+        font-size: 16px;
+    }
+
+    .homeP1 button {
+        width: 80px;
+        padding: 5px 10px;
+    }
+}
