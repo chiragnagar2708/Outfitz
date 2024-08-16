@@ -21,37 +21,33 @@ const AddProduct = () => {
     }
 
     const Add_Product = async () => {
-        console.log(productDetails);
-        let responseData;
-        let product = productDetails;
+    console.log(productDetails);
+    let product = productDetails;
 
-        let formData = new FormData();
-        formData.append('product', image);
+    let formData = new FormData();
+    formData.append('image', image);
+    formData.append('name', product.name);
+    formData.append('category', product.category);
+    formData.append('new_price', product.new_price);
+    formData.append('old_price', product.old_price);
 
-        await fetch('http://localhost:4000/upload', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json'
-            },
-            body:formData,
-        }).then((resp) => resp.json()).then((data) => {responseData = data});
-
-        if(responseData.success){
-            product.image = responseData.image_url;
-            console.log(product);
-            
-            await fetch('http://localhost:4000/addproduct', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body:JSON.stringify(product),
-            }).then((resp) => resp.json()).then((data) => {
-                data.success? alert("Product Added"): alert("Failed")
-            })
+    await fetch('http://localhost:4000/addproduct', {
+        method: 'POST',
+        body: formData,
+    })
+    .then((resp) => resp.json())
+    .then((data) => {
+        if (data.success) {
+            alert("Product Added Successfully");
+        } else {
+            alert("Failed to Add Product");
         }
-    }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert("An error occurred while adding the product.");
+    });
+};
 
   return (
     <div className='add-product'>
